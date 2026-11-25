@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Engineering: 1-Day Intensive Course</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, sans-serif; line-height: 1.65; color: #24292e; max-width: 920px; margin: 0 auto; padding: 24px; font-size: 0.85em; }
+        .title-header { border-bottom: 2px solid #0366d6; padding-bottom: 10px; margin-bottom: 20px; }
+        .title-header h1 { color: #24292e; margin-bottom: 4px; }
+        .title-header .author { color: #586069; font-size: 1.05em; font-style: italic; margin: 0; }
+        h2 { color: #0366d6; margin-top: 36px; border-bottom: 1px solid #e1e4e8; padding-bottom: 6px; }
+        h3 { color: #2f363d; margin-top: 18px; margin-bottom: 8px; }
+        h4 { color: #24292e; margin-top: 14px; margin-bottom: 6px; }
+        .theory-box { background: #fdfdfe; border-left: 4px solid #6f42c1; padding: 18px 22px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .theory-box h3:first-child { margin-top: 0; color: #5a32a3; }
+        .step { background: #f6f8fa; border-left: 4px solid #0366d6; padding: 16px 22px; margin-bottom: 20px; border-radius: 4px; }
+        .step h3:first-child { margin-top: 0; }
+        .breakdown-box { background: #ffffff; border: 1px solid #e1e4e8; border-left: 4px solid #1b7c83; padding: 14px 20px; margin-top: 14px; border-radius: 4px; }
+        .breakdown-box h4 { margin-top: 0; color: #1b7c83; }
+        .expected-output { background: #e6ffed; border-left: 4px solid #28a745; padding: 15px 20px; margin-bottom: 20px; border-radius: 4px; }
+        .expected-output h4 { margin-top: 0; color: #1a7f37; }
+        .warning-box { background: #fff8c5; border-left: 4px solid #e3b341; padding: 15px 20px; margin-bottom: 20px; border-radius: 4px; }
+        .transition { text-align: center; font-style: italic; color: #586069; padding: 20px; margin: 24px 0; border-top: 1px dashed #e1e4e8; border-bottom: 1px dashed #e1e4e8; }
+        pre { background: #1b1f23; color: #f8f8f2; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 13.5px; margin-top: 10px; line-height: 1.5; }
+        code { font-family: 'Fira Code', Consolas, monospace; }
+        .inline-code { background: #e1e4e8; padding: 2px 5px; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
+        ul, ol { padding-left: 22px; }
+        li { margin-bottom: 6px; }
+
+        /* Comparison Table */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.95em; background: #fff; }
+        th, td { border: 1px solid #d1d5da; padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background: #f1f8ff; color: #0366d6; font-weight: 600; }
+        tr:nth-child(even) td { background: #fafbfc; }
+
+        /* Pillar Cards for Module 0 */
+        .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 16px 0; }
+        .pillar-card { background: #f8f9fa; border: 1px solid #e1e4e8; border-top: 3px solid #6f42c1; border-radius: 6px; padding: 14px 16px; }
+        .pillar-card h4 { margin-top: 0; color: #5a32a3; }
+
+        /* Diagram CSS */
+        .diagram-container { display: flex; flex-direction: column; align-items: center; background: #f8f9fa; padding: 30px; border-radius: 8px; margin: 25px 0; border: 1px solid #e1e4e8; }
+        .flow-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 10px 0; width: 100%; }
+        .graph-box { background: #e1e4e8; padding: 20px; border-radius: 8px; display: flex; flex-direction: row; align-items: center; gap: 15px; border: 1px dashed #6a737d; }
+        .col { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .node { background: white; border: 2px solid #0366d6; padding: 12px 20px; border-radius: 6px; font-weight: bold; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-width: 150px; }
+        .node.ui { border-color: #0366d6; }
+        .node.brain { border-color: #0366d6; background: #f1f8ff; }
+        .node.db { border-color: #28a745; background: #dcffe4; }
+        .node.llm { border-color: #6f42c1; background: #f3f0ff; }
+        .node.tool { border-color: #d73a49; background: #ffeef0; }
+        .arrow { font-size: 24px; color: #586069; font-weight: bold; }
+        .arrow-vert { font-size: 24px; color: #586069; font-weight: bold; line-height: 1; margin: 5px 0; }
+        .label { font-size: 12px; color: #586069; text-align: center; margin-top: -5px; }
+    </style>
+</head>
+<body>
+    <div class="title-header">
+        <h1>Agentic Engineering: Building Stateful LLM Workflows</h1>
+        <p class="author">by Abbas Saliimi Lokman</p>
+    </div>
+    <p><strong>Stack:</strong> Python, LangGraph, python-telegram-bot, PostgreSQL, Docker</p>
+    <p><strong>Course Objective:</strong> Move beyond single-prompt LLM wrappers by engineering a production-grade, stateful AI agent capable of multi-turn memory persistence, asynchronous chat delivery via Telegram, and autonomous tool execution with self-correcting SQL data analysis.</p>
+    
+    <h2>Module 00: Preliminary Environment Setup</h2>
+    <div class="theory-box">
+        <h3>Module Overview: Why Environment Isolation Matters</h3>
+        <p>Agentic applications sit at the intersection of <strong>application code</strong> (Python orchestration), <strong>external network APIs</strong> (LLMs and messaging webhooks), and <strong>stateful infrastructure</strong> (databases). Before writing agent logic, we establish two clean boundaries on your workstation:</p>
+        <ul>
+            <li><strong>Application Runtime Isolation (Python + Virtual Environments):</strong> Keeps project dependencies (such as specific versions of <span class="inline-code">langgraph</span> and <span class="inline-code">psycopg</span>) decoupled from your operating system's global Python installation.</li>
+            <li><strong>Infrastructure Isolation (Docker Containers):</strong> Runs PostgreSQL inside a lightweight, disposable Linux container so you never have to manually configure OS-level database services, system users, or background daemons.</li>
+        </ul>
+    </div>
+
+    <div class="warning-box">
+        <strong>Important:</strong> If you are starting from a completely fresh machine, you must install the foundational runtime engines before writing any Python code.
+    </div>
+    
+    <div class="step">
+        <h3>Step 0.1: Install Python (System Runtime)</h3>
+        <p>You need <strong>Python 3.10 or higher</strong> because modern agent frameworks rely heavily on asynchronous execution (<span class="inline-code">asyncio</span>) and strict type annotations (<span class="inline-code">TypedDict</span>, <span class="inline-code">Annotated</span>) introduced and stabilized in Python 3.10+.</p>
+        <ul>
+            <li><strong>Windows/Mac:</strong> Go to <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> and run the installer. <strong>Crucial for Windows:</strong> Check the box that says <em>"Add python.exe to PATH"</em> during installation so your terminal can locate the Python binary from any directory.</li>
+            <li><strong>Linux (Ubuntu/Debian):</strong> Run <code>sudo apt update && sudo apt install python3 python3-venv python3-pip</code> (Note: Debian-based distributions package <span class="inline-code">venv</span> separately from the core Python runtime).</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 0.2: Install Docker Engine</h3>
+        <p>Docker packages software and all its filesystem dependencies into standardized units called <strong>containers</strong>. Instead of installing PostgreSQL natively on Windows/macOS, we pull an official Postgres image and run it on an isolated virtual network port.</p>
+        <ul>
+            <li><strong>Windows/Mac:</strong> Download and install <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a>. Once installed, open the application and ensure the Docker Engine daemon shows as <strong>"Running"</strong> (usually a green whale icon in your system tray/menu bar).</li>
+            <li><strong>Linux:</strong> Follow the <a href="https://docs.docker.com/engine/install/" target="_blank">official Docker Engine installation guide</a> and add your user to the <span class="inline-code">docker</span> group so you can run containers without <span class="inline-code">sudo</span>.</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 0.3: IDE and Terminal Setup</h3>
+        <p>You will run long-lived background processes (the database container and the Telegram bot poller) alongside interactive inspection commands. If you don't have a code editor, download <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code (VS Code)</a>. Open VS Code, go to <code>Terminal -> New Terminal</code>, and ensure you are comfortable opening split terminals to monitor bot logs while testing commands.</p>
+    </div>
+
+    <div class="expected-output">
+        <h4>✅ Expected Output for Module 00</h4>
+        <p>In your terminal, run the following two commands to verify both runtimes are accessible on your system PATH:</p>
+        <pre><code>python --version
+docker --version</code></pre>
+        <p><strong>Success:</strong> You should see output like <code>Python 3.12.x</code> and <code>Docker version 27.x.x</code> without any "command not found" or daemon connection errors.</p>
+    </div>
+
+    <div class="transition">
+        <em>Transition: With the base engines installed, let's dive deep into the theoretical architecture and execution mechanics of what we are about to build.</em>
+    </div>
+
+    <h2>Module 0: Theoretical Foundations of Agentic Systems</h2>
+    <div class="theory-box">
+        <h3>0.1 From Passive Chatbots to Autonomous Agentic Systems</h3>
+        <p>A common misconception is that an "AI Agent" is simply a chatbot with a longer system prompt. In reality, traditional LLM integrations and agentic systems differ fundamentally in <strong>who controls the execution flow</strong>:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Paradigm</th>
+                    <th>Control Flow</th>
+                    <th>State & Memory</th>
+                    <th>Failure Handling</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Standard LLM Wrapper</strong><br>(Single-Turn Completion)</td>
+                    <td>Linear: <code>Prompt &rarr; LLM &rarr; Response</code>. Zero branching or external actions.</td>
+                    <td>Stateless. Relies solely on static knowledge baked into model weights.</td>
+                    <td>Hallucinates when asked about private, real-time, or tabular data.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Deterministic Chain / RAG</strong><br>(Fixed Pipeline)</td>
+                    <td>Hardcoded DAG (Directed Acyclic Graph): <code>Retrieve &rarr; Stuff Prompt &rarr; Generate</code>. Developer dictates every step.</td>
+                    <td>Read-only context injection per request; no iterative refinement.</td>
+                    <td>If initial retrieval misses the mark, the final answer fails silently.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Stateful Agentic System</strong><br>(Cyclic Graph / ReAct)</td>
+                    <td><strong>Dynamic & Cyclic:</strong> The LLM inspects state, chooses tools, observes outputs, and loops until done.</td>
+                    <td><strong>Persistent Checkpoints:</strong> Full conversation + tool trace saved per user thread in PostgreSQL.</td>
+                    <td><strong>Self-Correcting:</strong> Reads tool error messages, rewrites inputs, and retries autonomously.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>0.2 Anatomy of the ReAct (Reason + Act) Paradigm</h3>
+        <p>Modern tool-using agents operate on the <strong>ReAct (Reason + Act)</strong> framework. Rather than forcing the LLM to guess an answer in a single forward pass, we place the LLM inside a feedback loop where it can interact with deterministic software tools (databases, calculators, APIs) and observe real outcomes:</p>
+        <ol>
+            <li><strong>State Ingestion (Context Assembly):</strong> The orchestrator loads the user's message alongside prior conversation turns and any previous tool outputs from the state store.</li>
+            <li><strong>Reasoning (Intent & Gap Analysis):</strong> The LLM evaluates whether it already possesses enough verified information to answer the user. If not, it determines <em>which</em> external tool can bridge the knowledge gap.</li>
+            <li><strong>Action Emission (Structured Tool Call):</strong> Instead of generating conversational prose, the LLM outputs a structured JSON payload specifying the target function name and arguments (e.g., <code>execute_sql(query="SELECT SUM(revenue) FROM sales...")</code>).</li>
+            <li><strong>Tool Execution & Observation:</strong> The Python runtime intercepts the tool call, executes the real code against external systems, and appends the raw output (or exception stack trace) back into the state as a <code>ToolMessage</code>.</li>
+            <li><strong>Iterative Evaluation & Termination:</strong> Control returns to the LLM. It inspects the new observation. If more data is needed—or if a query failed and needs fixing—it loops back to Step 3. Once satisfied, it synthesizes a natural-language response and exits the loop.</li>
+        </ol>
+
+        <h3>0.3 Core Architectural Pillars of Our Stack</h3>
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <h4>1. Cyclic State Graph (LangGraph)</h4>
+                <p>Standard DAG tools (like Airflow) forbid cycles. Agents <em>require</em> cycles because you cannot know in advance whether a task takes 1 tool call or 5 self-correction steps. LangGraph models the agent as a state machine of <strong>Nodes</strong> (functions) and <strong>Conditional Edges</strong> (routing decisions).</p>
+            </div>
+            <div class="pillar-card">
+                <h4>2. Checkpointed Persistence (Postgres)</h4>
+                <p>LLMs are stateless mathematical functions: every API call starts from zero. LangGraph's <strong>Checkpointer</strong> serializes the entire graph state after <em>every single node execution</em> into PostgreSQL, keyed by a unique <span class="inline-code">thread_id</span>. This provides crash recovery and isolated multi-user memory.</p>
+            </div>
+            <div class="pillar-card">
+                <h4>3. Async Event Gateway (Telegram)</h4>
+                <p>Real-world agents live inside messaging interfaces, not terminals. Using an asynchronous bot gateway allows our server to handle multiple users concurrently without blocking while waiting 1–3 seconds for LLM inference or SQL queries to complete.</p>
+            </div>
+        </div>
+
+        <h3>0.4 System Architecture Diagram</h3>
+        <p>The diagram below illustrates how data flows across the four layers of our system—from user interaction on mobile/desktop down to durable disk persistence in PostgreSQL:</p>
+        
+        <div class="diagram-container">
+            <div class="flow-row">
+                <div class="node ui">User (Telegram App)</div>
+                <div class="arrow">↔</div>
+                <div class="node ui">Telegram Poller / Webhook</div>
+            </div>
+            
+            <div class="arrow-vert">↕</div>
+            <div class="label">Passes Update (Text + User ID)</div>
+            <div class="arrow-vert">↕</div>
+            
+            <div class="graph-box">
+                <div class="col">
+                    <div class="label">State Graph</div>
+                    <div class="node brain">LangGraph Orchestrator</div>
+                </div>
+                <div class="arrow">↔</div>
+                <div class="col">
+                    <div class="node llm">LLM (Reasoning Node)</div>
+                    <div class="arrow-vert">↕</div>
+                    <div class="node tool">Tools (Action Node)</div>
+                </div>
+            </div>
+            
+            <div class="arrow-vert">↕</div>
+            <div class="label">Reads/Writes State Checkpoints (Thread = User ID)</div>
+            <div class="arrow-vert">↕</div>
+            
+            <div class="node db">PostgreSQL (Memory Persistence)</div>
+        </div>
+
+        <h3>0.5 End-to-End Request Lifecycle (Tracing a Single Message)</h3>
+        <p>To solidify how these components collaborate, trace what happens the exact millisecond a user sends <em>"What was Alice's total revenue?"</em> on Telegram:</p>
+        <ol>
+            <li><strong>Ingress & Identity Extraction:</strong> The Telegram Poller receives an HTTP JSON update containing the message text and the sender's unique numeric <span class="inline-code">user_id</span> (e.g., <code>987654321</code>).</li>
+            <li><strong>State Hydration:</strong> Python invokes <code>app.invoke(..., config={"configurable": {"thread_id": "987654321"}})</code>. LangGraph queries PostgreSQL for the latest checkpoint matching thread <code>987654321</code>, restoring full historical context before appending the new user message.</li>
+            <li><strong>Reasoning Step (Node 1 &rarr; LLM):</strong> The LangGraph Orchestrator sends the updated message list plus tool schemas to the LLM. Recognizing it cannot see the database directly, the LLM returns an <code>AIMessage</code> containing a <code>tool_call</code> for <code>execute_sql</code>.</li>
+            <li><strong>Conditional Routing & Execution (Node 2 &rarr; Tools):</strong> LangGraph's conditional edge detects the pending <code>tool_call</code> and routes execution to the <strong>Tools Node</strong>. Python runs the SQL query against Postgres, gets <code>250.75</code>, saves a checkpoint, and routes <em>back</em> to the LLM.</li>
+            <li><strong>Final Synthesis & Checkpoint Commit:</strong> The LLM reads the <code>ToolMessage</code> (<code>250.75</code>), determines no further tools are needed, and emits a final plain-text <code>AIMessage</code>. LangGraph commits the final state checkpoint to PostgreSQL and returns control to Telegram.</li>
+            <li><strong>Egress Delivery:</strong> The Telegram handler extracts the final string and delivers it back to the user's chat screen.</li>
+        </ol>
+    </div>
+
+    <div class="transition">
+        <em>Transition: Now that we understand the theoretical loop and data flow, we need to lay down the infrastructure. For our agent to possess true long-term memory across sessions, we first need a robust database to act as its hippocampus. Let's set up the environment.</em>
+    </div>
+
+    <h2>Module 1: Environment & Database Setup</h2>
+    <div class="theory-box">
+        <h3>Theory: Local State Persistence with Postgres</h3>
+        <p>Memory in LangGraph requires a persistent store to save the serialized state of the graph at every step (called <strong>Supersteps</strong>). While an in-memory dictionary (<span class="inline-code">MemorySaver</span>) wipes everything the moment your script restarts, and SQLite suffers from file-locking errors under concurrent async writes, <strong>PostgreSQL</strong> provides ACID-compliant, row-level concurrency out of the box.</p>
+        <p>By running PostgreSQL inside Docker, we get a production-grade relational database engine running locally on port <span class="inline-code">5432</span> that we can inspect, reset, or migrate cleanly.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Step 1.1: Spin up PostgreSQL via Docker</h3>
+        <p>Ensure Docker Desktop is running, then execute this in your terminal to create and start a database container:</p>
+        <pre><code>docker run --name agent-postgres \
+  -e POSTGRES_USER=agent_user \
+  -e POSTGRES_PASSWORD=agent_pass \
+  -e POSTGRES_DB=agent_db \
+  -p 5432:5432 \
+  -d postgres:15</code></pre>
+        <div class="breakdown-box">
+            <h4>What Each Docker Flag Does</h4>
+            <ul>
+                <li><code>--name agent-postgres</code>: Assigns a human-readable identifier so you can easily stop/start the container later (e.g., <code>docker stop agent-postgres</code>).</li>
+                <li><code>-e POSTGRES_USER / PASSWORD / DB</code>: Injects environment variables into the container at boot time to automatically create our database user, password, and default schema.</li>
+                <li><code>-p 5432:5432</code>: Maps port <code>5432</code> on your host laptop (left) to port <code>5432</code> inside the isolated container (right).</li>
+                <li><code>-d postgres:15</code>: Runs the official PostgreSQL 15 image in <strong>detached mode</strong> (in the background) so your terminal remains free.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>Step 1.2: Bootstrap the Python Project</h3>
+        <p>Create a dedicated project directory, initialize an isolated virtual environment, and install the required asynchronous dependencies:</p>
+        <pre><code>python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install langgraph langchain-groq langchain-openai python-telegram-bot psycopg psycopg-pool pandas sqlalchemy python-dotenv</code></pre>
+        <div class="breakdown-box">
+            <h4>Key Libraries Installed</h4>
+            <ul>
+                <li><code>langgraph</code>: Core state-machine orchestration engine for building cyclic agent workflows.</li>
+                <li><code>langchain-groq</code> / <code>langchain-openai</code>: Standardized LLM provider clients supporting structured tool calling.</li>
+                <li><code>python-telegram-bot</code>: Asynchronous Python wrapper around the Telegram Bot API.</li>
+                <li><code>psycopg</code> &amp; <code>psycopg-pool</code>: Modern PostgreSQL driver (v3) and connection pooler required by LangGraph's <code>PostgresSaver</code>.</li>
+                <li><code>pandas</code> &amp; <code>sqlalchemy</code>: Data manipulation and SQL engine abstraction used in Module 4 to seed and query tabular data.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>Step 1.3: Provision API Keys</h3>
+        <p>Before coding, you need authentication tokens for both Telegram (chat ingress/egress) and your LLM provider (reasoning engine).</p>
+        <ol>
+            <li><strong>Telegram:</strong> Open the Telegram app, search for <code>@BotFather</code> (look for the verified blue checkmark). Send <code>/newbot</code>, follow the naming prompts, and copy the <strong>HTTP API Token</strong>.</li>
+            <li><strong>LLM (Groq):</strong> Go to <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>, create a free account, and generate an API key for ultra-fast Llama-3 inference.</li>
+        </ol>
+        <p>Store these credentials in a <span class="inline-code">.env</span> file in your project root so sensitive secrets are never hardcoded into source files:</p>
+        <pre><code>TELEGRAM_BOT_TOKEN="your_telegram_token"
+GROQ_API_KEY="your_groq_key"
+DB_URI="postgresql://agent_user:agent_pass@localhost:5432/agent_db"</code></pre>
+    </div>
+
+    <div class="expected-output">
+        <h4>✅ Expected Output for Module 1</h4>
+        <p>Run <code>docker ps</code> in your terminal. You should see <code>agent-postgres</code> running with status <code>Up</code> on port <code>0.0.0.0:5432->5432/tcp</code>.</p>
+        <p>Run <code>python -c "import langgraph, psycopg; print('Ready!')"</code>. It should print <code>Ready!</code> without any <span class="inline-code">ModuleNotFoundError</span> exceptions.</p>
+    </div>
+
+    <div class="transition">
+        <em>Transition: Our database is humming, and our environment is loaded. It's time to build the "brain." We'll now define the ReAct loop and wire it to our freshly created database.</em>
+    </div>
+
+    <h2>Module 2: Defining the ReAct Graph</h2>
+    <div class="theory-box">
+        <h3>Theory: Graph-Based Control Flow & State Reducers</h3>
+        <p>In standard scripts, functions run sequentially from top to bottom. In LangGraph, we model our agent as a <strong>state machine</strong> governed by three core primitives:</p>
+        <ul>
+            <li><strong>State (<span class="inline-code">AgentState</span>):</strong> A shared typed dictionary passed to every node. By annotating <span class="inline-code">messages</span> with the <span class="inline-code">add_messages</span> reducer, whenever a node returns <code>{"messages": [new_msg]}</code>, LangGraph <em>appends</em> it to the conversation history rather than overwriting prior messages.</li>
+            <li><strong>Nodes (<span class="inline-code">agent</span>, <span class="inline-code">tools</span>):</strong> Standard Python functions that read the current state, perform work (calling an LLM or running a tool), and return a partial state update.</li>
+            <li><strong>Conditional Edges:</strong> Decision functions that inspect the state after a node finishes and dynamically route execution—either looping into the <span class="inline-code">tools</span> node if tool calls are requested, or terminating at <span class="inline-code">END</span>.</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h3>Step 2.1: Build the State Machine</h3>
+        <p>Create a file named <span class="inline-code">agent.py</span> to define the skeleton of your graph and verify database checkpoint creation:</p>
+        <pre><code>import os
+from typing import TypedDict, Annotated
+from psycopg_pool import ConnectionPool
+from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.postgres import PostgresSaver
+from langgraph.graph.message import add_messages
+from dotenv import load_dotenv
+
+load_dotenv()
+DB_URI = os.getenv("DB_URI")
+
+# 1. Define State
+class AgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+
+# 2. Mock Nodes (We'll expand these later)
+def call_model(state: AgentState):
+    return {"messages": [{"role": "assistant", "content": "I am alive."}]}
+
+def execute_tools(state: AgentState):
+    pass
+
+def should_continue(state: AgentState):
+    return "end" # Mock routing
+
+# 3. Define Graph
+workflow = StateGraph(AgentState)
+workflow.add_node("agent", call_model)
+workflow.add_node("tools", execute_tools)
+workflow.set_entry_point("agent")
+workflow.add_conditional_edges("agent", should_continue, {"continue": "tools", "end": END})
+workflow.add_edge("tools", "agent")
+
+# 4. Setup DB Checkpointer and Compile
+pool = ConnectionPool(conninfo=DB_URI, max_size=20)
+checkpointer = PostgresSaver(pool)
+checkpointer.setup() # CRITICAL: Creates tables in DB if they don't exist
+
+app = workflow.compile(checkpointer=checkpointer)</code></pre>
+
+        <div class="breakdown-box">
+            <h4>Code Walkthrough: Inside <span class="inline-code">agent.py</span></h4>
+            <ul>
+                <li><strong>Section 1 (State Schema):</strong> <code>Annotated[list, add_messages]</code> tells LangGraph how to merge state updates. Without <code>add_messages</code>, every new reply would erase previous turns.</li>
+                <li><strong>Section 2 (Nodes &amp; Router):</strong> We stub out <code>call_model</code> and <code>execute_tools</code> first so we can validate our graph wiring and Postgres integration independently before introducing LLM latency or API costs.</li>
+                <li><strong>Section 3 (Topology Wiring):</strong> Notice <code>workflow.add_edge("tools", "agent")</code>. This creates the <strong>ReAct cycle</strong>—after tools execute, control <em>always</em> returns to the LLM so it can interpret the tool's output.</li>
+                <li><strong>Section 4 (Connection Pool &amp; Migration):</strong> <code>ConnectionPool(max_size=20)</code> maintains reusable TCP connections to PostgreSQL so concurrent Telegram users don't pay connection-handshake overhead. <code>checkpointer.setup()</code> automatically executes SQL DDL migrations to create the checkpoint tables on first startup.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="expected-output">
+        <h4>✅ Expected Output for Module 2</h4>
+        <p>Temporarily add <code>print(app.get_graph().draw_ascii())</code> at the bottom of <span class="inline-code">agent.py</span> and run <code>python agent.py</code> (remove the print statement afterward).</p>
+        <p>You should see a printed ASCII diagram showing <code>__start__ &rarr; agent &rarr; tools &rarr; agent &rarr; __end__</code> in your terminal. If you inspect your Postgres database (using DBeaver, pgAdmin, or <code>docker exec -it agent-postgres psql -U agent_user -d agent_db -c "\dt"</code>), you will see tables named <code>checkpoints</code>, <code>checkpoint_blobs</code>, and <code>checkpoint_writes</code> automatically created.</p>
+    </div>
+
+    <div class="transition">
+        <em>Transition: The agent has a brain and memory, but it's trapped inside our Python script. Let's give it eyes and a mouth by connecting it to Telegram's async interface.</em>
+    </div>
+
+    <h2>Module 3: Exposing via Telegram Async Bot</h2>
+    <div class="theory-box">
+        <h3>Theory: Stateful Conversations on Stateless Platforms</h3>
+        <p>Messaging platforms like Telegram deliver every incoming chat message as an independent, stateless event. To transform isolated messages into a continuous, multi-turn conversation—while keeping different users completely isolated—we bridge Telegram's user identity to LangGraph's checkpointing system:</p>
+        <ul>
+            <li><strong>Thread Isolation (<span class="inline-code">thread_id</span>):</strong> By extracting <code>update.effective_user.id</code> and passing it as <code>thread_id</code> inside the graph's <code>config</code> dictionary, PostgreSQL partitions conversation histories per user automatically. User A's queries never bleed into User B's context window.</li>
+            <li><strong>Long-Polling vs. Webhooks:</strong> In production, bots often use HTTPS Webhooks. During local development, <strong>Long-Polling</strong> (<span class="inline-code">run_polling()</span>) allows your local Python process to open an outbound connection to Telegram's servers and pull new messages immediately—requiring zero public IP addresses, SSL certificates, or tunneling tools like ngrok.</li>
+            <li><strong>Asynchronous Execution (<span class="inline-code">async/await</span>):</strong> Using non-blocking coroutines ensures network I/O (sending Telegram replies) yields control cleanly on the event loop.</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h3>Step 3.1: Long-Polling Binding</h3>
+        <p>Create a file named <span class="inline-code">bot.py</span> to connect Telegram events to your compiled LangGraph <span class="inline-code">app</span>:</p>
+        <pre><code>from telegram import Update
+from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
+from agent import app # Import the compiled graph from Module 2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    user_input = update.message.text
+    
+    print(f"Received message from {user_id}: {user_input}")
+    
+    # Pass user_id as thread_id for persistent state memory isolation
+    config = {"configurable": {"thread_id": str(user_id)}}
+    
+    # Invoke the graph
+    response = app.invoke({"messages": [("user", user_input)]}, config)
+    
+    # Reply to user
+    final_message = response["messages"][-1]["content"] if isinstance(response["messages"][-1], dict) else response["messages"][-1].content
+    await update.message.reply_text(final_message)
+
+if __name__ == '__main__':
+    bot_app = ApplicationBuilder().token(os.environ["TELEGRAM_BOT_TOKEN"]).build()
+    bot_app.add_handler(MessageHandler(filters.TEXT, handle_message))
+    print("Bot is polling... Waiting for messages from Telegram.")
+    bot_app.run_polling()</code></pre>
+
+        <div class="breakdown-box">
+            <h4>Code Walkthrough: Inside <span class="inline-code">bot.py</span></h4>
+            <ul>
+                <li><code>filters.TEXT</code>: Ensures our handler only triggers on text messages (ignoring stickers, photos, or voice notes unless explicitly handled).</li>
+                <li><code>config = {"configurable": {"thread_id": str(user_id)}}</code>: The critical binding key. LangGraph uses this string to look up existing rows in the Postgres <code>checkpoints</code> table before running the graph, and saves the updated message list back under this ID afterward.</li>
+                <li><code>response["messages"][-1]</code>: Because <code>AgentState</code> appends every message in chronological order (User &rarr; AI Tool Call &rarr; Tool Output &rarr; Final AI Answer), index <code>-1</code> always holds the agent's final synthesized response.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="expected-output">
+        <h4>✅ Expected Output for Module 3</h4>
+        <ol>
+            <li>Run <code>python bot.py</code> in your terminal. You should see <code>Bot is polling... Waiting for messages from Telegram.</code></li>
+            <li>Open the Telegram app on your phone or desktop.</li>
+            <li>Search for the bot you created in Step 1.3 (using the username ending in <code>bot</code>).</li>
+            <li>Click <strong>START</strong> or send a message like <em>"Hello"</em>.</li>
+            <li>Your bot should reply instantly with <code>I am alive.</code> (our mocked LLM response from Module 2), confirming end-to-end connectivity from Telegram &rarr; Python &rarr; Postgres &rarr; Telegram.</li>
+        </ol>
+    </div>
+
+    <div class="transition">
+        <em>Transition: We now have a robust, stateful agent pipeline connected directly to your phone. Let's swap out the "mocked" chat persona for an analytical powerhouse: an Agent capable of autonomous Exploratory Data Analysis (EDA) via SQL.</em>
+    </div>
+
+    <h2>Module 4: Data Science Use Case: Text-to-SQL EDA Agent</h2>
+    <div class="theory-box">
+        <h3>Theory: Agentic SQL Execution & Autonomous Self-Correction</h3>
+        <p>Standard vector-based RAG (Retrieval-Augmented Generation) struggles with structured tabular data—chunking rows into embeddings destroys mathematical relationships, making aggregations like <code>SUM</code>, <code>AVG</code>, or <code>GROUP BY</code> unreliable.</p>
+        <p>Instead, we give the LLM direct access to a deterministic <code>execute_sql</code> tool and leverage three agentic principles:</p>
+        <ul>
+            <li><strong>Docstrings as Tool Schemas:</strong> The <code>@tool</code> decorator inspects your Python function signature and docstring to generate a JSON Schema sent to the LLM. Describing the exact table name (<code>sales</code>) and column types inside the docstring grounds the LLM so it writes accurate queries on the first try.</li>
+            <li><strong>Closed-Loop Error Recovery:</strong> If the LLM hallucinates a column name or writes invalid PostgreSQL syntax, our <code>try/except</code> block catches the database exception and returns the error message <em>as a string observation</em> rather than crashing the Python process. On the next loop iteration, the LLM reads the Postgres error, diagnoses its mistake, and writes a corrected query autonomously.</li>
+            <li><strong>High-Level Graph Compilation (<span class="inline-code">create_react_agent</span>):</strong> Once you understand how nodes, conditional edges, and state reducers work under the hood (Module 2), LangGraph's prebuilt <code>create_react_agent</code> compiles that exact ReAct topology in a single line while preserving full compatibility with our PostgreSQL <code>checkpointer</code>.</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>Step 4.1: Seed Dummy Data & Create the SQL Tool</h3>
+        <p>Replace the contents of <span class="inline-code">agent.py</span> to seed a sample <span class="inline-code">sales</span> table in PostgreSQL, bind the <span class="inline-code">execute_sql</span> tool, and initialize the Llama-3 70B reasoning model:</p>
+        <pre><code>import os
+from psycopg_pool import ConnectionPool
+from langgraph.checkpoint.postgres import PostgresSaver
+from langchain_core.tools import tool
+from langchain_groq import ChatGroq
+from langgraph.prebuilt import create_react_agent
+import pandas as pd
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+
+load_dotenv()
+DB_URI = os.getenv("DB_URI")
+engine = create_engine(DB_URI)
+
+# 0. Initialize PostgreSQL Checkpointer (Persisted from Module 2)
+pool = ConnectionPool(conninfo=DB_URI, max_size=20)
+checkpointer = PostgresSaver(pool)
+checkpointer.setup()
+
+# 1. Seed Dummy Data (Run once on startup)
+df = pd.DataFrame({
+    "product": ["Widget A", "Widget B", "Widget A", "Widget C"], 
+    "revenue": [100.50, 200.00, 150.25, 300.75],
+    "sales_rep": ["Alice", "Bob", "Alice", "Charlie"]
+})
+df.to_sql("sales", engine, if_exists="replace", index=False)
+
+# 2. Define the Tool
+@tool
+def execute_sql(query: str) -> str:
+    """Executes a SQL query on the PostgreSQL database. 
+    The database has a table called 'sales' with columns: product (TEXT), revenue (FLOAT), sales_rep (TEXT)."""
+    print(f"[TOOL EXECUTION] Running SQL: {query}")
+    try:
+        result = pd.read_sql(query, engine)
+        return result.to_markdown()
+    except Exception as e:
+        return f"Error executing query: {str(e)}. Please rewrite the query and try again."
+
+# 3. Initialize the Real LLM
+llm = ChatGroq(model="llama3-70b-8192")
+tools = [execute_sql]
+
+# 4. Use the pre-built ReAct Agent constructor (replaces manual graph routing)
+app = create_react_agent(llm, tools, checkpointer=checkpointer)</code></pre>
+
+        <div class="breakdown-box">
+            <h4>Code Walkthrough & Production Considerations</h4>
+            <ul>
+                <li><strong>Markdown Table Formatting (<code>result.to_markdown()</code>):</strong> LLMs parse Markdown tables significantly more cleanly than raw Python tuples or unformatted DataFrame strings, reducing arithmetic interpretation errors.</li>
+                <li><strong>Multi-Turn Memory in Action:</strong> Because <code>checkpointer=checkpointer</code> is attached to <code>create_react_agent</code>, you can ask follow-up questions on Telegram (e.g., <em>"Who sold the most?"</em> followed by <em>"What products did they sell?"</em>) and the agent will resolve <em>"they"</em> from its PostgreSQL thread history.</li>
+                <li><strong>Production Security Note:</strong> In production deployments, always connect Text-to-SQL agents using a restricted <strong>read-only</strong> PostgreSQL role (<code>GRANT SELECT ON ...</code>) so prompt injection cannot execute <code>DROP TABLE</code> or <code>DELETE</code> statements.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="expected-output">
+        <h4>✅ Expected Output for Module 4 (Talking to your Bot)</h4>
+        <ol>
+            <li>Stop your running bot (<kbd>Ctrl+C</kbd>) and restart it with <code>python bot.py</code> so it loads the updated <span class="inline-code">agent.py</span>.</li>
+            <li>Message your Telegram bot: <em>"Calculate the total revenue for Widget A."</em></li>
+            <li><strong>Success:</strong> Watch your terminal print <code>[TOOL EXECUTION] Running SQL: SELECT SUM(revenue) ...</code>, and receive the reply on Telegram: <em>"The total revenue for Widget A is 250.75."</em></li>
+            <li><strong>Multi-Turn &amp; Analytical Test:</strong> Send a follow-up message like <em>"Which sales rep performed best, and how much did they beat second place by?"</em> Watch the agent write a <code>GROUP BY</code> / <code>ORDER BY</code> query, compute the difference, and answer cleanly—or self-correct automatically if a query throws an error.</li>
+        </ol>
+    </div>
+
+</body>
+</html>
